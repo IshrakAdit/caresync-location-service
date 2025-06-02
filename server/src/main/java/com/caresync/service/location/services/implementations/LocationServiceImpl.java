@@ -18,27 +18,31 @@ public class LocationServiceImpl implements LocationService {
 
     private final LocationRepository locationRepository;
 
+    @Override
     public String testResponse() {
         return "Location service running successfully";
     }
 
+    @Override
     public List<LocationResponse> getAllLocations() {
         return locationRepository.findAll().stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
+    @Override
     public List<LocationResponse> getLocationsByType(LOCATION_TYPE type) {
         return locationRepository.findAllByLocationType(type).stream()
                 .map(this::mapToResponse)
                 .collect(Collectors.toList());
     }
 
-    public LocationResponse getLocationByTypeAndId(LocationRequest request) {
-        return locationRepository
-                .findByIdAndLocationType(request.locationId(), request.locationType())
-                .map(this::mapToResponse)
-                .orElseThrow(() -> new RuntimeException("Location not found"));
+    @Override
+    public LocationResponse getLocationById(String id) {
+        Location location = locationRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
+
+        return mapToResponse(location);
     }
 
     private LocationResponse mapToResponse(Location location) {

@@ -11,6 +11,6 @@ public interface LocationService {
     String testResponse();
     List<LocationResponse> getAllLocations();
     List<LocationResponse> getLocationsByType(LOCATION_TYPE type);
-    LocationResponse getLocationByTypeAndId(LocationRequest request);
+    LocationResponse getLocationById(String id);
 
 }
