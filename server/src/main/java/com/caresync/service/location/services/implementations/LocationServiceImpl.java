@@ -47,6 +47,8 @@ public class LocationServiceImpl implements LocationService {
 
     private LocationResponse mapToResponse(Location location) {
         return LocationResponse.builder()
+                .id(location.getId())
+                .locationType(location.getLocationType())
                 .address(location.getAddress())
                 .thana(location.getThana())
                 .po(location.getPo())

@@ -43,7 +43,7 @@ public class LocationControllerV1 {
         return ResponseEntity.ok(locationService.getLocationsByType(LOCATION_TYPE.DOCTOR));
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("id/{id}")
     public ResponseEntity<LocationResponse> getLocationById(@PathVariable String id) {
         return ResponseEntity.ok(locationService.getLocationById(id));
     }
