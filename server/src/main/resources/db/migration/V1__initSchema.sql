@@ -18,4 +18,4 @@ INSERT INTO locations (id, location_type, address, thana, po, city, postal_code,
 VALUES
     ('loc-001', 'HOSPITAL', '123 Street', 'Dhanmondi', '1209', 'Dhaka', 1205, 1),
     ('loc-002', 'DOCTOR', '56 Road', 'Gulshan', '1212', 'Dhaka', 1212, 2),
-    ('loc-003', 'OTHER', NULL, NULL, NULL, 'Chittagong', 4000, 3);
+    ('loc-003', 'USER', NULL, NULL, NULL, 'Chittagong', 4000, 3);
