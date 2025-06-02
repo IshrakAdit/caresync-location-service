@@ -3,8 +3,6 @@ package com.caresync.service.location.dtos.response;
 import com.caresync.service.location.enums.LOCATION_TYPE;
 import lombok.Builder;
 
-import java.time.ZoneId;
-
 @Builder
 public record LocationResponse(
         String id,
@@ -14,6 +12,6 @@ public record LocationResponse(
         String po,
         String city,
         Number postalCode,
-        Number ZoneId
+        Number zoneId
 ) {}
 
