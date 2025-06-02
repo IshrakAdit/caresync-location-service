@@ -29,16 +29,19 @@ public class Location {
     private String city;
 
     @NotBlank(message = "Postal code cannot be blank")
-    private String postalCode;
+    private Number postalCode;
 
     @NotBlank(message = "Zone ID cannot be blank")
-    private String zoneId;
+    private Number zoneId;
 
-    public Location(String locationId, LOCATION_TYPE newLocationType, String newCity, String newPostalCode, String newZoneId) {
+    public Location(String locationId, LOCATION_TYPE newLocationType, String newCity, Number newPostalCode, Number newZoneId) {
         this.id = locationId;
         this.locationType = newLocationType;
-        this.address = newCity;
-        this.thana = newPostalCode;
-        this.city = newZoneId;
+        this.address = null;
+        this.thana = null;
+        this.po = null;
+        this.city = newCity;
+        this.postalCode = newPostalCode;
+        this.zoneId = newZoneId;
     }
 }
