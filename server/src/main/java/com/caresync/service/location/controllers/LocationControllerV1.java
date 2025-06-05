@@ -52,4 +52,9 @@ public class LocationControllerV1 {
         return ResponseEntity.ok(locationService.saveNewLocation(locationRequest));
     }
 
+    @PutMapping("/update")
+    public ResponseEntity<LocationResponse> updateLocation(@RequestBody LocationRequest locationRequest) {
+        return ResponseEntity.ok(locationService.updateLocation(locationRequest));
+    }
+
 }

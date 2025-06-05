@@ -51,6 +51,37 @@ public class LocationServiceImpl implements LocationService {
         return mapToResponse(locationRepository.save(newLocation));
     }
 
+    @Override
+    public LocationResponse updateLocation(LocationRequest locationRequest) {
+        Location location = locationRepository.findById(locationRequest.id())
+                .orElseThrow(() -> new RuntimeException("Location not found with id: " + locationRequest.id()));
+
+        if (locationRequest.locationType() != null) {
+            location.setLocationType(locationRequest.locationType());
+        }
+        if (locationRequest.address() != null) {
+            location.setAddress(locationRequest.address());
+        }
+        if (locationRequest.thana() != null) {
+            location.setThana(locationRequest.thana());
+        }
+        if (locationRequest.po() != null) {
+            location.setPo(locationRequest.po());
+        }
+        if (locationRequest.city() != null) {
+            location.setCity(locationRequest.city());
+        }
+        if (locationRequest.postalCode() != null) {
+            location.setPostalCode(locationRequest.postalCode());
+        }
+        if (locationRequest.zoneId() != null) {
+            location.setZoneId(locationRequest.zoneId());
+        }
+
+        return mapToResponse(locationRepository.save(location));
+    }
+
+
     private LocationResponse mapToResponse(Location location) {
         return LocationResponse.builder()
                 .id(location.getId())

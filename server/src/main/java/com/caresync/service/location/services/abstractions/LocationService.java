@@ -13,5 +13,6 @@ public interface LocationService {
     List<LocationResponse> getLocationsByType(LOCATION_TYPE type);
     LocationResponse getLocationById(Long id);
     LocationResponse saveNewLocation(LocationRequest locationRequest);
+    LocationResponse updateLocation(LocationRequest locationRequest);
 
 }
