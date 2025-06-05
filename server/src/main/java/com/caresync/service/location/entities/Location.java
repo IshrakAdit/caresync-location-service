@@ -2,7 +2,6 @@ package com.caresync.service.location.entities;
 
 import com.caresync.service.location.enums.LOCATION_TYPE;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
@@ -18,7 +17,7 @@ public class Location {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message = "Must provide location type")
+    @NotNull(message = "Must provide location type")
     @Enumerated(EnumType.STRING)
     private LOCATION_TYPE locationType;
 
@@ -26,7 +25,7 @@ public class Location {
     private String thana;
     private String po;
 
-    @NotBlank(message = "City cannot be blank")
+    @NotNull(message = "City cannot be blank")
     private String city;
 
     @NotNull(message = "Postal code cannot be blank")
