@@ -1,6 +1,5 @@
 package com.caresync.service.location.services.implementations;
 
-import com.caresync.service.location.dtos.request.LocationRequest;
 import com.caresync.service.location.dtos.response.LocationResponse;
 import com.caresync.service.location.entities.Location;
 import com.caresync.service.location.enums.LOCATION_TYPE;
@@ -38,7 +37,7 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationResponse getLocationById(String id) {
+    public LocationResponse getLocationById(Long id) {
         Location location = locationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
 

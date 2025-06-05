@@ -4,7 +4,7 @@ import com.caresync.service.location.enums.LOCATION_TYPE;
 import jakarta.validation.constraints.NotNull;
 
 public record LocationRequest(
-        String locationId,
+        Long id,
 
         @NotNull(message = "Location type must be provided")
         LOCATION_TYPE locationType

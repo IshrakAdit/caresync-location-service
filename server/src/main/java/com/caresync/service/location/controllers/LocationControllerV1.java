@@ -1,11 +1,9 @@
 package com.caresync.service.location.controllers;
 
-import com.caresync.service.location.dtos.request.LocationRequest;
 import com.caresync.service.location.dtos.response.LocationResponse;
 import com.caresync.service.location.enums.LOCATION_TYPE;
 import com.caresync.service.location.services.abstractions.LocationService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -44,7 +42,7 @@ public class LocationControllerV1 {
     }
 
     @GetMapping("id/{id}")
-    public ResponseEntity<LocationResponse> getLocationById(@PathVariable String id) {
+    public ResponseEntity<LocationResponse> getLocationById(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.getLocationById(id));
     }
 

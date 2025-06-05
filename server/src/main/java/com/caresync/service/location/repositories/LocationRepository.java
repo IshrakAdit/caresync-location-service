@@ -7,9 +7,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 import java.util.Optional;
 
-public interface LocationRepository extends JpaRepository<Location, String> {
+public interface LocationRepository extends JpaRepository<Location, Long> {
 
     List<Location> findAllByLocationType(LOCATION_TYPE locationType);
-    Optional<Location> findByIdAndLocationType(String id, LOCATION_TYPE locationType);
+    Optional<Location> findByIdAndLocationType(Long id, LOCATION_TYPE locationType);
 
 }

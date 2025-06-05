@@ -15,7 +15,8 @@ import lombok.*;
 public class Location {
 
     @Id
-    private String id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     @NotBlank(message = "Must provide location type")
     @Enumerated(EnumType.STRING)
@@ -34,8 +35,7 @@ public class Location {
     @NotNull(message = "Zone ID cannot be blank")
     private Long zoneId;
 
-    public Location(String locationId, LOCATION_TYPE newLocationType, String newCity, Long newPostalCode, Long newZoneId) {
-        this.id = locationId;
+    public Location(LOCATION_TYPE newLocationType, String newCity, Long newPostalCode, Long newZoneId) {
         this.locationType = newLocationType;
         this.address = null;
         this.thana = null;

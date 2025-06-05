@@ -5,7 +5,7 @@ import lombok.Builder;
 
 @Builder
 public record LocationResponse(
-        String id,
+        Long id,
         LOCATION_TYPE locationType,
         String address,
         String thana,
