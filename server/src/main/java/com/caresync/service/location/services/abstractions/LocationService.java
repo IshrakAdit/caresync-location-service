@@ -14,5 +14,6 @@ public interface LocationService {
     LocationResponse getLocationById(Long id);
     LocationResponse saveNewLocation(LocationRequest locationRequest);
     LocationResponse updateLocation(LocationRequest locationRequest);
+    LocationResponse deleteLocationById(Long id);
 
 }
