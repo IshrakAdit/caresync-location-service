@@ -44,6 +44,10 @@ public class LocationServiceImpl implements LocationService {
         return mapToResponse(location);
     }
 
+    public LocationResponse saveNewLocation(Location location) {
+        return mapToResponse(locationRepository.save(location));
+    }
+
     private LocationResponse mapToResponse(Location location) {
         return LocationResponse.builder()
                 .id(location.getId())
