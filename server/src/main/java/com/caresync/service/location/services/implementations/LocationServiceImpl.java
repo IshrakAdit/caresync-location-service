@@ -1,5 +1,6 @@
 package com.caresync.service.location.services.implementations;
 
+import com.caresync.service.location.dtos.request.LocationRequest;
 import com.caresync.service.location.dtos.response.LocationResponse;
 import com.caresync.service.location.entities.Location;
 import com.caresync.service.location.enums.LOCATION_TYPE;
@@ -44,8 +45,10 @@ public class LocationServiceImpl implements LocationService {
         return mapToResponse(location);
     }
 
-    public LocationResponse saveNewLocation(Location location) {
-        return mapToResponse(locationRepository.save(location));
+    @Override
+    public LocationResponse saveNewLocation(LocationRequest locationRequest) {
+        Location newLocation = new Location(locationRequest.locationType(), locationRequest.address(), locationRequest.thana(), locationRequest.po(), locationRequest.city(), locationRequest.postalCode(), locationRequest.zoneId());
+        return mapToResponse(locationRepository.save(newLocation));
     }
 
     private LocationResponse mapToResponse(Location location) {

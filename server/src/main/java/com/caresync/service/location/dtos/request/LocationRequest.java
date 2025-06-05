@@ -12,7 +12,7 @@ public record LocationRequest(
         @NotNull(message = "City must be provided")
         String city,
         @NotNull(message = "Postal code must be provided")
-        Number postalCode,
+        Long postalCode,
         @NotNull(message = "Zone ID must be provided")
-        Number zoneId
+        Long zoneId
 ) {}

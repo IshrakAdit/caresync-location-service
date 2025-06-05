@@ -44,4 +44,14 @@ public class Location {
         this.postalCode = newPostalCode;
         this.zoneId = newZoneId;
     }
+
+    public Location(LOCATION_TYPE newLocationType, String newAddress, String newThana, String newPO, String newCity, Long newPostalCode, Long newZoneId) {
+        this.locationType = newLocationType;
+        this.address = newAddress;
+        this.thana = newThana;
+        this.po = newPO;
+        this.city = newCity;
+        this.postalCode = newPostalCode;
+        this.zoneId = newZoneId;
+    }
 }

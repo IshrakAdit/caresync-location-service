@@ -11,7 +11,7 @@ public record LocationResponse(
         String thana,
         String po,
         String city,
-        Number postalCode,
-        Number zoneId
+        Long postalCode,
+        Long zoneId
 ) {}
 

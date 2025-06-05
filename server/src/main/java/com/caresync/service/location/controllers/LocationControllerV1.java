@@ -1,5 +1,6 @@
 package com.caresync.service.location.controllers;
 
+import com.caresync.service.location.dtos.request.LocationRequest;
 import com.caresync.service.location.dtos.response.LocationResponse;
 import com.caresync.service.location.enums.LOCATION_TYPE;
 import com.caresync.service.location.services.abstractions.LocationService;
@@ -41,9 +42,14 @@ public class LocationControllerV1 {
         return ResponseEntity.ok(locationService.getLocationsByType(LOCATION_TYPE.DOCTOR));
     }
 
-    @GetMapping("id/{id}")
+    @GetMapping("/id/{id}")
     public ResponseEntity<LocationResponse> getLocationById(@PathVariable Long id) {
         return ResponseEntity.ok(locationService.getLocationById(id));
+    }
+
+    @PostMapping("/add")
+    public ResponseEntity<LocationResponse> saveNewLocation(@RequestBody LocationRequest locationRequest) {
+        return ResponseEntity.ok(locationService.saveNewLocation(locationRequest));
     }
 
 }
