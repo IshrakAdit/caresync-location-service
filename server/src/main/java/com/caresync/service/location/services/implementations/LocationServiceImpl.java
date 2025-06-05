@@ -82,12 +82,11 @@ public class LocationServiceImpl implements LocationService {
     }
 
     @Override
-    public LocationResponse deleteLocationById(Long id) {
+    public void deleteLocationById(Long id) {
         Location location = locationRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Location not found with id: " + id));
 
         locationRepository.delete(location);
-        return mapToResponse(location);
     }
 
     private LocationResponse mapToResponse(Location location) {

@@ -5,6 +5,7 @@ import com.caresync.service.location.dtos.response.LocationResponse;
 import com.caresync.service.location.enums.LOCATION_TYPE;
 import com.caresync.service.location.services.abstractions.LocationService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -49,7 +50,7 @@ public class LocationControllerV1 {
 
     @PostMapping("/add")
     public ResponseEntity<LocationResponse> saveNewLocation(@RequestBody LocationRequest locationRequest) {
-        return ResponseEntity.ok(locationService.saveNewLocation(locationRequest));
+        return ResponseEntity.status(HttpStatus.CREATED).body(locationService.saveNewLocation(locationRequest));
     }
 
     @PutMapping("/update")
@@ -58,8 +59,9 @@ public class LocationControllerV1 {
     }
 
     @DeleteMapping("/delete/id/{id}")
-    public ResponseEntity<LocationResponse> deleteLocation(@PathVariable Long id) {
-        return ResponseEntity.ok(locationService.deleteLocationById(id));
+    public ResponseEntity<Void> deleteLocation(@PathVariable Long id) {
+        locationService.deleteLocationById(id);
+        return ResponseEntity.noContent().build();
     }
 
 }
