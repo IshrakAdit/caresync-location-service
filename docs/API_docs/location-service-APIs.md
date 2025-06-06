@@ -52,13 +52,33 @@ Fetches all available locations in the system.
 [
   {
     "id": 1,
-    "name": "Dhaka",
-    "type": "HOSPITAL"
+    "locationType": "HOSPITAL",
+    "address": "123 Street",
+    "thana": "Dhanmondi",
+    "po": "1209",
+    "city": "Dhaka",
+    "postalCode": 1205,
+    "zoneId": 1
   },
   {
     "id": 2,
-    "name": "Chittagong",
-    "type": "USER"
+    "locationType": "DOCTOR",
+    "address": "56 Road",
+    "thana": "Gulshan",
+    "po": "1212",
+    "city": "Dhaka",
+    "postalCode": 1212,
+    "zoneId": 2
+  },
+  {
+    "id": 3,
+    "locationType": "USER",
+    "address": null,
+    "thana": null,
+    "po": null,
+    "city": "Chittagong",
+    "postalCode": 4000,
+    "zoneId": 3
   }
 ]
 ```
@@ -91,8 +111,13 @@ Fetches all locations categorized as hospitals.
 [
   {
     "id": 1,
-    "name": "Dhaka Medical",
-    "type": "HOSPITAL"
+    "locationType": "HOSPITAL",
+    "address": "123 Street",
+    "thana": "Dhanmondi",
+    "po": "1209",
+    "city": "Dhaka",
+    "postalCode": 1205,
+    "zoneId": 1
   }
 ]
 ```
@@ -112,9 +137,14 @@ Fetches all locations categorized as users.
 ```json
 [
   {
-    "id": 2,
-    "name": "Gulshan",
-    "type": "USER"
+    "id": 3,
+    "locationType": "USER",
+    "address": null,
+    "thana": null,
+    "po": null,
+    "city": "Chittagong",
+    "postalCode": 4000,
+    "zoneId": 3
   }
 ]
 ```
@@ -134,9 +164,14 @@ Fetches all locations categorized as doctors.
 ```json
 [
   {
-    "id": 3,
-    "name": "Dr. Rahman Clinic",
-    "type": "DOCTOR"
+    "id": 2,
+    "locationType": "DOCTOR",
+    "address": "56 Road",
+    "thana": "Gulshan",
+    "po": "1212",
+    "city": "Dhaka",
+    "postalCode": 1212,
+    "zoneId": 2
   }
 ]
 ```
@@ -161,9 +196,14 @@ Fetches a location by its ID.
 
 ```json
 {
-  "id": 1,
-  "name": "Dhaka",
-  "type": "HOSPITAL"
+  "id": 2,
+  "locationType": "DOCTOR",
+  "address": "56 Road",
+  "thana": "Gulshan",
+  "po": "1212",
+  "city": "Dhaka",
+  "postalCode": 1212,
+  "zoneId": 2
 }
 ```
 
@@ -193,8 +233,13 @@ Adds a new location to the system.
 
 ```json
 {
-  "name": "Khulna General",
-  "type": "HOSPITAL"
+  "locationType": "USER",
+  "address": "house-road-block",
+  "thana": "thana",
+  "po": "post-office",
+  "city": "Sylhet",
+  "postalCode": 1209,
+  "zoneId": 5
 }
 ```
 
@@ -202,9 +247,14 @@ Adds a new location to the system.
 
 ```json
 {
-  "id": 5,
-  "name": "Khulna General",
-  "type": "HOSPITAL"
+  "id": 4,
+  "locationType": "USER",
+  "address": "house-road-block",
+  "thana": "thana",
+  "po": "post-office",
+  "city": "Sylhet",
+  "postalCode": 1209,
+  "zoneId": 5
 }
 ```
 
@@ -234,9 +284,14 @@ Updates an existing location’s details.
 
 ```json
 {
-  "id": 5,
-  "name": "Khulna General Updated",
-  "type": "HOSPITAL"
+  "id": 4,
+  "locationType": "USER",
+  "address": "house-road-block",
+  "thana": "thana",
+  "po": "post-office",
+  "city": "Rangpur",
+  "postalCode": 1210,
+  "zoneId": 5
 }
 ```
 
@@ -254,7 +309,7 @@ Updates an existing location’s details.
 
 ## 9. Delete Location by ID
 
-**DELETE** `/delete/id/{id}`
+**DELETE** `/delete/{id}`
 
 ### Description
 
