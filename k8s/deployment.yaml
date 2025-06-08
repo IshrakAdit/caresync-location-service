@@ -1,0 +1,19 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cs-location-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: cs-location-app
+  template:
+    metadata:
+      labels:
+        app: cs-location-app
+    spec:
+      containers:
+        - name: cs-location-app
+          image: ishrakadit07/cs-location-app:latest
+          ports:
+            - containerPort: 8083
