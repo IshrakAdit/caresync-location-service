@@ -76,7 +76,7 @@ jobs:
       - name: Update deployment image
         run: |
           kubectl set image deployment/cs-location-app \
-            cs-location-app=${{ secrets.DOCKERHUB_USERNAME }}/${{ env.IMAGE_NAME }}:${{ env.IMAGE_TAG }}
+            cs-location-app=${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
 
       - name: Wait for deployment rollout
         run: |

@@ -14,7 +14,7 @@ spec:
     spec:
       containers:
         - name: cs-location-app
-          image: ishrakadit07/cs-location-app:latest
+          image: ishrakadit07/caresync-hub:cs-location-app
           ports:
             - containerPort: 8083
           env:
