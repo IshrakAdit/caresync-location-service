@@ -24,6 +24,9 @@ jobs:
           distribution: temurin
           java-version: "17"
 
+      - name: Make mvnw executable
+        run: chmod +x ./server/mvnw
+
       - name: Build Spring Boot app
         run: |
           cd server
