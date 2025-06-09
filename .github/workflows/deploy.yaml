@@ -1,4 +1,4 @@
-name: Dockerize & Deploy to AKS
+name: Dockerize & Deploy to GKE
 
 on:
   # Uncomment when ready to trigger on push
@@ -35,14 +35,18 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cs-location-app:latest ./server
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/cs-location-app:latest
 
-      - name: Set up kubectl with base64 kubeconfig
-        run: |
-          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > $HOME/kubeconfig.yaml
-          echo "KUBECONFIG=$HOME/kubeconfig.yaml" >> $GITHUB_ENV
+      - name: Set up Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v1
+        with:
+          version: "latest"
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          project_id: your-gcp-project-id
 
-      - name: Deploy to AKS
+      - name: Authenticate kubectl
+        run: |
+          gcloud container clusters get-credentials your-cluster-name --zone your-cluster-zone --project your-gcp-project-id
+
+      - name: Deploy to GKE
         run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
-        env:
-          KUBECONFIG: ${{ env.KUBECONFIG }}
