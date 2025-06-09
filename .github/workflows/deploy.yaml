@@ -1,9 +1,8 @@
 name: Dockerize & Deploy to GKE
 
 on:
-  # false
-  push:
-    branches: [main]
+  # push:
+  #   branches: [main]
   workflow_dispatch:
 
 env:
@@ -18,67 +17,67 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      # - name: Set up JDK
-      #   uses: actions/setup-java@v3
-      #   with:
-      #     distribution: temurin
-      #     java-version: "17"
-
-      # - name: Make mvnw executable
-      #   run: chmod +x ./server/mvnw
-
-      # - name: Build Spring Boot app
-      #   run: |
-      #     cd server
-      #     ./mvnw clean package -DskipTests
-
-      # - name: Login to Docker Hub
-      #   uses: docker/login-action@v2
-      #   with:
-      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
-      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      # - name: Build and push Docker image
-      #   run: |
-      #     docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app ./server
-      #     docker push ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
-
-      - name: Authenticate to Google Cloud
-        uses: google-github-actions/auth@v1
+      - name: Set up JDK
+        uses: actions/setup-java@v3
         with:
-          credentials_json: "${{ secrets.GCP_SA_KEY }}"
+          distribution: temurin
+          java-version: "17"
 
-      - name: Set up Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v1
+      - name: Make mvnw executable
+        run: chmod +x ./server/mvnw
+
+      - name: Build Spring Boot app
+        run: |
+          cd server
+          ./mvnw clean package -DskipTests
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
-      - name: Install GKE auth plugin
+      - name: Build and push Docker image
         run: |
-          gcloud components install gke-gcloud-auth-plugin
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app ./server
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
 
-      - name: Authenticate kubectl
-        run: |
-          gcloud container clusters get-credentials ${{ secrets.K8S_CLUSTER_NAME }} \
-            --zone ${{ secrets.K8S_CLUSTER_ZONE }} \
-            --project ${{ secrets.GCP_PROJECT_ID }}
+      # - name: Authenticate to Google Cloud
+      #   uses: google-github-actions/auth@v1
+      #   with:
+      #     credentials_json: "${{ secrets.GCP_SA_KEY }}"
 
-      - name: Create Kubernetes Secret from GitHub Secret
-        run: |
-          kubectl create secret generic cs-location-secrets \
-            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
-            --dry-run=client -o yaml | kubectl apply -f -
+      # - name: Set up Google Cloud SDK
+      #   uses: google-github-actions/setup-gcloud@v1
+      #   with:
+      #     project_id: ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Apply Kubernetes Deployment and Service
-        run: |
-          kubectl apply -f k8s/deployment.yaml
-          kubectl apply -f k8s/service.yaml
+      # - name: Install GKE auth plugin
+      #   run: |
+      #     gcloud components install gke-gcloud-auth-plugin
 
-      - name: Update deployment image
-        run: |
-          kubectl set image deployment/cs-location-app \
-            cs-location-app=${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
+      # - name: Authenticate kubectl
+      #   run: |
+      #     gcloud container clusters get-credentials ${{ secrets.K8S_CLUSTER_NAME }} \
+      #       --zone ${{ secrets.K8S_CLUSTER_ZONE }} \
+      #       --project ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Wait for deployment rollout
-        run: |
-          kubectl rollout status deployment/cs-location-app
+      # - name: Create Kubernetes Secret from GitHub Secret
+      #   run: |
+      #     kubectl create secret generic cs-location-secrets \
+      #       --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+      #       --dry-run=client -o yaml | kubectl apply -f -
+
+      # - name: Apply Kubernetes Deployment and Service
+      #   run: |
+      #     kubectl apply -f k8s/deployment.yaml
+      #     kubectl apply -f k8s/service.yaml
+
+      # - name: Update deployment image
+      #   run: |
+      #     kubectl set image deployment/cs-location-app \
+      #       cs-location-app=${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
+
+      # - name: Wait for deployment rollout
+      #   run: |
+      #     kubectl rollout status deployment/cs-location-app
