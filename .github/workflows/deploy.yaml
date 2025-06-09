@@ -1,8 +1,6 @@
 name: Dockerize & Deploy to GKE
 
 on:
-  # Uncomment to enable auto-deploy on main branch push
-  # Add other trigger events
   push:
     branches: [main]
   workflow_dispatch:
@@ -19,36 +17,39 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up JDK
-        uses: actions/setup-java@v3
+      # - name: Set up JDK
+      #   uses: actions/setup-java@v3
+      #   with:
+      #     distribution: temurin
+      #     java-version: "17"
+
+      # - name: Make mvnw executable
+      #   run: chmod +x ./server/mvnw
+
+      # - name: Build Spring Boot app
+      #   run: |
+      #     cd server
+      #     ./mvnw clean package -DskipTests
+
+      # - name: Login to Docker Hub
+      #   uses: docker/login-action@v2
+      #   with:
+      #     username: ${{ secrets.DOCKERHUB_USERNAME }}
+      #     password: ${{ secrets.DOCKERHUB_TOKEN }}
+
+      # - name: Build and push Docker image
+      #   run: |
+      #     docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app ./server
+      #     docker push ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v1
         with:
-          distribution: temurin
-          java-version: "17"
-
-      - name: Make mvnw executable
-        run: chmod +x ./server/mvnw
-
-      - name: Build Spring Boot app
-        run: |
-          cd server
-          ./mvnw clean package -DskipTests
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v2
-        with:
-          username: ${{ secrets.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_TOKEN }}
-
-      - name: Build and push Docker image
-        run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app ./server
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/caresync-hub:cs-location-app
+          credentials_json: "${{ secrets.GCP_SA_KEY }}"
 
       - name: Set up Google Cloud SDK
         uses: google-github-actions/setup-gcloud@v1
         with:
-          version: "latest"
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
           project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Authenticate kubectl
