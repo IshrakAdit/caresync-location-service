@@ -17,3 +17,9 @@ spec:
           image: ishrakadit07/cs-location-app:latest
           ports:
             - containerPort: 8083
+  env:
+    - name: POSTGRES_PASSWORD
+      valueFrom:
+        secretKeyRef:
+          name: cs-location-secrets
+          key: POSTGRES_PASSWORD
