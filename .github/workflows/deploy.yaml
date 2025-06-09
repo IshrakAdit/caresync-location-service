@@ -2,8 +2,8 @@ name: Dockerize & Deploy to GKE
 
 on:
   # Uncomment to enable auto-deploy on main branch push
-  # push:
-  #   branches: [main]
+  push:
+    branches: [main]
   workflow_dispatch:
 
 env:
