@@ -1,9 +1,10 @@
 name: Dockerize & Deploy to AKS
 
 on:
-  false
+  # Uncomment when ready to trigger on push
   # push:
   #   branches: [main]
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
@@ -19,7 +20,9 @@ jobs:
           java-version: "17"
 
       - name: Build Spring Boot app
-        run: ./mvnw clean package -DskipTests
+        run: |
+          cd server
+          ./mvnw clean package -DskipTests
 
       - name: Login to Docker Hub
         uses: docker/login-action@v2
@@ -29,16 +32,17 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest .
-          docker push ${{ secrets.DOCKERHUB_USERNAME }}/spring-app:latest
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/cs-location-app:latest ./server
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/cs-location-app:latest
 
       - name: Set up kubectl with base64 kubeconfig
         run: |
-          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > kubeconfig.yaml
-          export KUBECONFIG=kubeconfig.yaml
-          kubectl version
+          echo "${{ secrets.KUBECONFIG_BASE64 }}" | base64 --decode > $HOME/kubeconfig.yaml
+          echo "KUBECONFIG=$HOME/kubeconfig.yaml" >> $GITHUB_ENV
 
       - name: Deploy to AKS
         run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
+        env:
+          KUBECONFIG: ${{ env.KUBECONFIG }}
