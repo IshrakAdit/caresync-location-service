@@ -52,9 +52,14 @@ jobs:
             --zone ${{ secrets.K8S_CLUSTER_ZONE }} \
             --project ${{ secrets.GCP_PROJECT_ID }}
 
-      - name: Apply Kubernetes manifests
+      - name: Create Kubernetes Secret from GitHub Secret
         run: |
-          kubectl apply -f k8s/secret.yaml
+          kubectl create secret generic cs-location-secrets \
+            --from-literal=POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }} \
+            --dry-run=client -o yaml | kubectl apply -f -
+
+      - name: Apply Kubernetes Deployment and Service
+        run: |
           kubectl apply -f k8s/deployment.yaml
           kubectl apply -f k8s/service.yaml
 
