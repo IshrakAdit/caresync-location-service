@@ -31,7 +31,7 @@ jobs:
             ${{ runner.os }}-maven-
 
       - name: Run Location Service Tests
-        working-directory: services/location/server
+        working-directory: server
         run: |
           echo "Running location service tests..."
           ./mvnw test
@@ -43,7 +43,7 @@ jobs:
         with:
           name: location-service-test-results-${{ github.run_number }}
           path: |
-            services/location/server/target/surefire-reports/
+            server/target/surefire-reports/
           retention-days: 30
 
       - name: Display Test Summary
@@ -55,9 +55,9 @@ jobs:
           echo "Branch: ${{ github.ref_name }}"
           echo "Commit: ${{ github.sha }}"
           
-          if [ -d "services/location/server/target/surefire-reports" ]; then
+          if [ -d "server/target/surefire-reports" ]; then
             echo "✅ Test reports generated successfully"
-            echo "Number of test report files: $(find services/location/server/target/surefire-reports -name "*.xml" | wc -l)"
+            echo "Number of test report files: $(find server/target/surefire-reports -name "*.xml" | wc -l)"
           else
             echo "❌ No test reports found"
           fi
