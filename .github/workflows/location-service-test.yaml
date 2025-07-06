@@ -34,7 +34,8 @@ jobs:
         working-directory: server
         run: |
           echo "Running location service tests..."
-          ./mvnw test
+          chmod +x mvnw
+          ./mvnw -B test
           echo "Tests completed successfully"
 
       - name: Upload Test Results
