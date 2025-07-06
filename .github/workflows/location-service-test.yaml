@@ -1,10 +1,10 @@
-name: Location Service Unit & Mock Tests
+name: Unit tests for CareSync location service
 
 on:
   push:
-    branches: [tabib]
-  pull_request:
-    branches: [tabib]
+    branches: [main]
+  # pull_request:
+  #   branches: [main]
   workflow_dispatch:
 
 jobs:
