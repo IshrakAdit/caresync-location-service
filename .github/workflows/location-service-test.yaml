@@ -1,13 +1,16 @@
-name: Run Spring Boot Tests
+name: Location Service Unit & Mock Tests
 
 on:
-  # push:
-  #   branches: [main]
+  push:
+    branches: [tabib]
+  pull_request:
+    branches: [tabib]
   workflow_dispatch:
 
 jobs:
-  test:
+  unit-tests:
     runs-on: ubuntu-latest
+    name: Run Unit & Mock Tests
 
     steps:
       - name: Checkout code
@@ -27,7 +30,45 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
-      - name: Run tests with Maven
+      - name: Run Location Service Tests
+        working-directory: services/location/server
         run: |
-          cd server
-          mvn clean test
+          echo "Running location service tests..."
+          ./mvnw test
+          echo "Tests completed successfully"
+
+      - name: Upload Test Results
+        uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: location-service-test-results-${{ github.run_number }}
+          path: |
+            services/location/server/target/surefire-reports/
+          retention-days: 30
+
+      - name: Display Test Summary
+        if: always()
+        run: |
+          echo "=== Location Service Test Summary ==="
+          echo "Workflow run: ${{ github.run_number }}"
+          echo "Triggered by: ${{ github.event_name }}"
+          echo "Branch: ${{ github.ref_name }}"
+          echo "Commit: ${{ github.sha }}"
+          
+          if [ -d "services/location/server/target/surefire-reports" ]; then
+            echo "✅ Test reports generated successfully"
+            echo "Number of test report files: $(find services/location/server/target/surefire-reports -name "*.xml" | wc -l)"
+          else
+            echo "❌ No test reports found"
+          fi
+
+      - name: Test Results Summary
+        if: always()
+        run: |
+          echo "## Location Service Test Results" >> $GITHUB_STEP_SUMMARY
+          echo "| Metric | Value |" >> $GITHUB_STEP_SUMMARY
+          echo "|--------|-------|" >> $GITHUB_STEP_SUMMARY
+          echo "| Service | Location Service |" >> $GITHUB_STEP_SUMMARY
+          echo "| Run Number | ${{ github.run_number }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Branch | ${{ github.ref_name }} |" >> $GITHUB_STEP_SUMMARY
+          echo "| Status | ${{ job.status }} |" >> $GITHUB_STEP_SUMMARY
